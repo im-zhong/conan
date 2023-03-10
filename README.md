@@ -7,6 +7,8 @@ My Conan Custom Commands
 1. 加一个insights 可以很方便的看某个文件的insights conan insight <source files...>
 2. 加一个类似 rust new library 一样的东西 可以非常方便的添加一个模块 同时生成一个hello_world源文件和CMake文件 并自动修改上层CMakeLists添加子模块 
 
+# install
+1. ./install.py
 
 # 项目生命周期
 1. 创建项目 `conan new cmake_exe -d name=hello -d version=0.1`
