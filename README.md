@@ -11,13 +11,14 @@ My Conan Custom Commands
 1. ./install.py
 
 # 项目生命周期
-1. 创建项目 `conan new cmake_exe -d name=example -d version=0.1 -d requires=gtest/cci.20210126`
-2. 安装依赖 `conan install . --build=missing`
-3. 替换顶层目录模板文件 `conan top`, 将template/top文件夹内的文件与项目目录顶层文件夹内的文件进行替换
-4. 删除项目模板带着无用的文件 `rm -rf src/*`
+1. 创建项目 `conan new top -d name=example `
+2. 安装依赖 `conan install . [--build=missing]`
+3. 编译项目 `conan build .`
 5. 新建模块 `conan module -p src/hello`
 6. 编译 `conan build .`
 7. 测试 `conan ut -r hello` 或者 `conan ut`
+8. 格式化 `conan fmt -p src` 或者 `conan fmt`
+9. insight `conan insight -p src/main.cpp`
 
 # 真是不容易 终于找到conan怎么查找template路径了 文档写的就是依托
 1. apiv2: get_home_template(template_name)
