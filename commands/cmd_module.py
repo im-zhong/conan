@@ -13,17 +13,18 @@ home = os.path.expanduser('~')
 template_path = f'{home}/.conan2/extensions/commands/template/module'
 
 
-def copy_template(template_path: str, path: str, module: str):
+def copy_template(out: ConanOutput, template_path: str, path: str, module: str):
     date = datetime.datetime.now()
     with open(template_path) as file:
         contents = file.read()
     contents = re.sub('date', date.strftime("%Y/%m/%d"), contents)
     contents = re.sub('module', module, contents)
+    out.info(f"generating... {path}")
     with open(path, 'w') as file:
         file.write(contents)
 
 
-def generate_module(module_path: str):
+def generate_module(out: ConanOutput, module_path: str):
 
     (dirname, module) = os.path.split(module_path)
 
@@ -85,10 +86,10 @@ def generate_module(module_path: str):
     test = os.path.join(test_path, f'test_{module}.cpp')
     cmake = os.path.join(module_path, 'CMakeLists.txt')
 
-    copy_template(template_header, header, module)
-    copy_template(template_source, source, module)
-    copy_template(template_test, test, module)
-    copy_template(template_cmake, cmake, module)
+    copy_template(out, template_header, header, module)
+    copy_template(out, template_source, source, module)
+    copy_template(out, template_test, test, module)
+    copy_template(out, template_cmake, cmake, module)
 
     # 还有一个问题 如果我们的父目录没有CMakeLists.txt 那么我们需要为其创建一个
     # 这就要求父目录不能是根目录 也就是 .
@@ -153,4 +154,4 @@ def module(conan_api: ConanAPI, parser, *args):
 
     # 现在path绝对带着一个/
     # 最起码是 ./src
-    generate_module(os.path.join(dirname, basename))
+    generate_module(out, os.path.join(dirname, basename))
