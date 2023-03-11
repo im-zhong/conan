@@ -13,12 +13,12 @@ def insight(conan_api: ConanAPI, parser, *args):
     """
 
     # insight 为什么要通过conan来调？？？
-    parser.add_argument('-p', '--path', default='', action=OnceArgument,
-                        help='cpp file')
+    # 这样就可以不用写 conan insight -p path 了
+    parser.add_argument('file', help='cpp file')
     args = parser.parse_args(*args)
 
     out = ConanOutput()
-    result = subprocess.run(["insights", args.path],
+    result = subprocess.run(["insights", args.file],
                             capture_output=True, encoding="utf-8")
     if result.stdout:
         out.info(result.stdout)
