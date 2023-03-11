@@ -31,7 +31,7 @@ class {{name}}Recipe(ConanFile):
     def generate(self):
         deps = CMakeDeps(self)
         deps.generate()
-        tc = CMakeToolchain(self, generator="Ninja")
+        tc = CMakeToolchain(self)
         tc.generate()
 
     def build(self):

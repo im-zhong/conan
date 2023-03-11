@@ -19,6 +19,13 @@ My Conan Custom Commands
 7. 测试 `conan ut -r hello` 或者 `conan ut`
 8. 格式化 `conan fmt -p src` 或者 `conan fmt`
 9. insight `conan insight -p src/main.cpp`
+10. conan profile & option. 所以其实如果你想编译debug或者release 
+首先你需要在conan_home/profiles里面添加一个 debug 和 release 然后再conan cli中添加
+一个参数 -pr debug, -pr release 即可
+11. 全局的设置是再 conan_home/global.conf里面设置的 [https://docs.conan.io/2/reference/config_files.html]
+需要注意的一个点是 当你依赖某些库的时候 需要使用Conan install 进行编译
+`conan install -pr release -b missing .`
+但是只要这个库被编译好了 其他的项目是不需要这个install过程的 直接build就行
 
 # 真是不容易 终于找到conan怎么查找template路径了 文档写的就是依托
 1. apiv2: get_home_template(template_name)
