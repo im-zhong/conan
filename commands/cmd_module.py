@@ -105,7 +105,7 @@ def generate_module(out: ConanOutput, module_path: str):
     else:
         # 在这种情况下我们需要创建这个文件
         with open(prev_cmake, 'w') as file:
-            file.write(f"add_subdirectory({module})\n")
+            file.write(f"\nadd_subdirectory({module})\n")
 
 
 @conan_command(group="Custom commands")

@@ -17,4 +17,8 @@ def clean(conan_api: ConanAPI, parser, *args):
         ConanOutput().error("conanfile.py not found")
         return
 
-    shutil.rmtree("build")
+    if os.path.exists("compile_commands.json"):
+        os.unlink("compile_commands.json")
+
+    if os.path.exists("build"):
+        shutil.rmtree("build")
