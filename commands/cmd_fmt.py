@@ -34,8 +34,7 @@ def fmt(conan_api: ConanAPI, parser, *args):
         out.error(".clang-format not found")
         return
 
-    parser.add_argument('-p', '--path', default='', action=OnceArgument,
-                        help='path')
+    parser.add_argument('path', help='path')
     args = parser.parse_args(*args)
 
     if not args.path:

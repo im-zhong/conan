@@ -19,8 +19,7 @@ def ut(conan_api: ConanAPI, parser, *args):
         out.error("conanfile.py not found")
         return
 
-    parser.add_argument('-r', '--regex', default='', action=OnceArgument,
-                        help='search unit test witl regex')
+    parser.add_argument('regex', help='search unit test witl regex')
     args = parser.parse_args(*args)
 
     failed_list = []

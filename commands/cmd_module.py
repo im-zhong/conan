@@ -121,8 +121,7 @@ def module(conan_api: ConanAPI, parser, *args):
         out.error("conanfile.py not found")
         return
 
-    parser.add_argument('-p', '--path', default='', action=OnceArgument,
-                        help='path from current path to module name')
+    parser.add_argument('path', help='path from current path to module name')
     args = parser.parse_args(*args)
 
     # 用户输入的参数 表示的是从根目录开始 到你希望创建的模块的路径
