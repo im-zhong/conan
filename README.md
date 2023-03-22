@@ -44,3 +44,7 @@ Load a template from the Conan home templates/command/new folder
 在这个目录下面放自己的template 比如
 ~/.conan2/templates/command/new/test/xxx.txt
 然后 `conan new test -d key=value ...`
+
+# 增加两个命令
+1. conan st <path> 借助自己的code statistics 工具统计代码量
+2. 如果src内部存在一个main文件夹 那么conan可以认为这个main里面存放着一个可执行文件 那么 conan run {args...} 就会用args调用该可执行文件
