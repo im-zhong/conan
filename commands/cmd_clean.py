@@ -20,5 +20,8 @@ def clean(conan_api: ConanAPI, parser, *args):
     if os.path.exists("compile_commands.json"):
         os.unlink("compile_commands.json")
 
+    if os.path.exists("CMakeUserPresets.json"):
+        os.unlink("CMakeUserPresets.json")
+
     if os.path.exists("build"):
         shutil.rmtree("build")
