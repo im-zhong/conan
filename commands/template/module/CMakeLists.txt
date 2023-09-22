@@ -14,5 +14,5 @@ add_executable(test_module
 )
 target_link_libraries(test_module
     PRIVATE module
-    PRIVATE gtest::gtest
+    PRIVATE doctest::doctest
 )

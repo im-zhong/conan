@@ -22,8 +22,9 @@ class {{name}}Recipe(ConanFile):
     exports_sources = "CMakeLists.txt", "src/*"
 
     def requirements(self):
-        self.requires("fmt/9.1.0")
-        self.requires("gtest/cci.20210126")
+        # https://docs.conan.io/2/tutorial/versioning/version_ranges.html
+        # https://conan.io/center/recipes/doctest?version=2.4.11
+        self.requires("doctest/[^2.4]")
 
     def layout(self):
         cmake_layout(self)

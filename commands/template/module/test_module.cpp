@@ -1,8 +1,8 @@
 // date
 
+#define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
+#include "doctest/doctest.h"
 #include "module/module.hpp"
-#include "gtest/gtest.h"
+#include <iostream>
 
-int main(int argc, char *argv[]) {
-  EXPECT_EQ(module::HelloWorld(), "hello, world");
-}
+TEST_CASE("testing module") { std::cout << "hello module" << std::endl; }

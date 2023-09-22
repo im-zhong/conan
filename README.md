@@ -14,7 +14,7 @@ My Conan Custom Commands
 1. 创建项目 `conan new top -d name=example `
 2. 安装依赖 `conan install . [--build=missing]`
 3. 编译项目 `conan build .`
-5. 新建模块 `conan module -p src/hello`
+5. 新建模块 `conan module [-t module|test] src/hello`
 6. 编译 `conan build .`
 7. 测试 `conan ut -r hello` 或者 `conan ut`
 8. 格式化 `conan fmt -p src` 或者 `conan fmt`
