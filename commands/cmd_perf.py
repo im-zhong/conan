@@ -3,15 +3,13 @@ from conan.api.output import ConanOutput, Color
 from conan.cli.command import OnceArgument, conan_command
 from conans.client.userio import UserInput
 import os
-import re
-import subprocess
-import time
+import shutil
 
 
 @conan_command(group="Custom commands")
-def run(conan_api: ConanAPI, parser, *args):
+def perf(conan_api: ConanAPI, parser, *args):
     """
-    run executable file
+    perf executable file
     """
 
     out = ConanOutput()

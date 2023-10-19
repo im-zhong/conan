@@ -10,8 +10,8 @@ import datetime
 
 # conan path/
 home = os.path.expanduser('~')
-module_template_path = f'{home}/.conan2/extensions/commands/template/module'
-test_template_path = f'{home}/.conan2/extensions/commands/template/test'
+lib_template_path = f'{home}/.conan2/extensions/commands/template/lib'
+bin_template_path = f'{home}/.conan2/extensions/commands/template/bin'
 
 
 def copy_template(out: ConanOutput, template_path: str, path: str, module: str):
@@ -154,7 +154,7 @@ def generate_test(template_path: str, out: ConanOutput, test_path: str):
 
 
 @conan_command(group="Custom commands")
-def module(conan_api: ConanAPI, parser, *args):
+def mod(conan_api: ConanAPI, parser, *args):
     """
     创建一个子模块
     conan module path1/path2/path3/module_name
@@ -200,11 +200,11 @@ def module(conan_api: ConanAPI, parser, *args):
 
     # 现在path绝对带着一个/
     # 最起码是 ./src
-    if args.template == 'module':
-        generate_module(module_template_path, out,
+    if args.template == 'lib':
+        generate_module(lib_template_path, out,
                         os.path.join(dirname, basename))
-    elif args.template == 'test':
-        generate_test(test_template_path, out,
+    elif args.template == 'bin':
+        generate_test(bin_template_path, out,
                       os.path.join(dirname, basename))
     else:
         out.error(f"unknown template:{args.template}")

@@ -6,12 +6,14 @@ My Conan Custom Commands
 # todo
 1. 加一个insights 可以很方便的看某个文件的insights conan insight <source files...>
 2. 加一个类似 rust new library 一样的东西 可以非常方便的添加一个模块 同时生成一个hello_world源文件和CMake文件 并自动修改上层CMakeLists添加子模块 
+3. 把命令行的接口设计成和rust的cargo一样吧 这样就不需要记住两套逻辑了
+4. 提供一个命令 可以检查编译目标文件的所有符号
 
 # install
 1. ./install.py
 
 # 项目生命周期
-1. 创建项目 `conan new top -d name=example `
+1. 创建项目 `conan new top -d name=example ` TODO: 为什么不会自动创建一个文件夹呢 参考cargo new example
 2. 安装依赖 `conan install . [--build=missing]`
 3. 编译项目 `conan build .`
 5. 新建模块 `conan module [-t module|test] src/hello`
