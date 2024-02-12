@@ -11,8 +11,9 @@ from argparse import ArgumentParser
 
 # conan path/
 home = os.path.expanduser("~")
-lib_template_path = f"{home}/.conan2/extensions/commands/template/lib"
+lib_template_path = f"{home}/.conan2/extensions/commands/template/module"
 bin_template_path = f"{home}/.conan2/extensions/commands/template/bin"
+test_template_path = f"{home}/.conan2/extensions/commands/template/test"
 
 
 def copy_template(out: ConanOutput, template_path: str, path: str, module: str):
@@ -211,5 +212,7 @@ def mod(conan_api: ConanAPI, parser: ArgumentParser, *args):
         generate_module(lib_template_path, out, os.path.join(dirname, basename))
     elif args.template == "bin":
         generate_test(bin_template_path, out, os.path.join(dirname, basename))
+    elif args.template == "test":
+        generate_test(test_template_path, out, os.path.join(dirname, basename))
     else:
         out.error(f"unknown template:{args.template}")
