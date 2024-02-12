@@ -7,6 +7,7 @@ import re
 import subprocess
 import shutil
 import datetime
+from argparse import ArgumentParser
 
 # conan path/
 home = os.path.expanduser("~")
@@ -155,7 +156,7 @@ def generate_test(template_path: str, out: ConanOutput, test_path: str):
 
 
 @conan_command(group="Custom commands")
-def mod(conan_api: ConanAPI, parser, *args):
+def mod(conan_api: ConanAPI, parser: ArgumentParser, *args):
     """
     创建一个子模块
     conan module path1/path2/path3/module_name

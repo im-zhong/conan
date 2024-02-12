@@ -48,5 +48,26 @@ Load a template from the Conan home templates/command/new folder
 然后 `conan new test -d key=value ...`
 
 # 增加两个命令
-1. conan st <path> 借助自己的code statistics 工具统计代码量
+1. conan st <path> 借助自己的code statistics 工具统计代码量 conan status .
 2. 如果src内部存在一个main文件夹 那么conan可以认为这个main里面存放着一个可执行文件 那么 conan run {args...} 就会用args调用该可执行文件
+
+# 调研cargo的命令行和项目组织方式，取其精华
+# 分两种 一种是创建整个项目 conan new 对应 cargo new --lib --bin
+# 第二种是增加一个新的模块 conan mod 对应 cargo 没有 cargo的mod创建起来非常简单 所以都是直接创建一个文件
+
+1. conan mod --lib include/ src/ test/
+2. conan mod --bin bin.cpp
+3. conan mod --test test.cpp doctest
+lib bin example bench test
+
+conan clean 对应 cargo clean
+conan build 对应 cargo build
+conan run 对应 cargo run, 感觉conan run 可以代替 conan ut conan run test 可以用subcommand实现
+conan fmt
+conan perf
+conan stat
+conan insight
+
+https://docs.conan.io/2.0/reference/extensions/custom_commands.html
+# https://docs.conan.io/2.0/reference/extensions/custom_commands.html#argument-definition-and-parsing
+argparse
