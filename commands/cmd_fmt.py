@@ -13,7 +13,10 @@ def dofmt(out: ConanOutput, path: str):
                 filename = os.path.join(root, file)
                 out.info(f"formatting... {filename}")
                 result = subprocess.run(
-                    ["clang-format", "-i", filename], capture_output=True, encoding='utf-8')
+                    ["clang-format", "-i", filename],
+                    capture_output=True,
+                    encoding="utf-8",
+                )
                 if result.stdout:
                     out.info(result.stdout)
                 if result.stderr:
@@ -34,7 +37,7 @@ def fmt(conan_api: ConanAPI, parser, *args):
         out.error(".clang-format not found")
         return
 
-    parser.add_argument('path', help='path')
+    parser.add_argument("path", help="path")
     args = parser.parse_args(*args)
 
     if not args.path:

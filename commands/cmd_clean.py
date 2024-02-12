@@ -7,7 +7,7 @@ import shutil
 
 
 @conan_command(group="Custom commands")
-def clean(conan_api: ConanAPI, parser, *args):
+def clean(conan_api: ConanAPI, parser, *args) -> None:
     """
     delete build directory
     """

@@ -6,5 +6,6 @@ for root, _, files in os.walk("."):
         if file.endswith((".h", ".cpp")):
             filename = os.path.join(root, file)
             print(filename)
-            subprocess.run(["iconv", "-f", "GB2312", "-t",
-                           "UTF-8", filename, "-o", filename])
+            subprocess.run(
+                ["iconv", "-f", "GB2312", "-t", "UTF-8", filename, "-o", filename]
+            )

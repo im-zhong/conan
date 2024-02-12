@@ -9,24 +9,23 @@ import shutil
 import datetime
 
 # conan path/
-home = os.path.expanduser('~')
-lib_template_path = f'{home}/.conan2/extensions/commands/template/lib'
-bin_template_path = f'{home}/.conan2/extensions/commands/template/bin'
+home = os.path.expanduser("~")
+lib_template_path = f"{home}/.conan2/extensions/commands/template/lib"
+bin_template_path = f"{home}/.conan2/extensions/commands/template/bin"
 
 
 def copy_template(out: ConanOutput, template_path: str, path: str, module: str):
     date = datetime.datetime.now()
     with open(template_path) as file:
         contents = file.read()
-    contents = re.sub('date', date.strftime("%Y/%m/%d"), contents)
-    contents = re.sub('module', module, contents)
+    contents = re.sub("date", date.strftime("%Y/%m/%d"), contents)
+    contents = re.sub("module", module, contents)
     out.info(f"generating... {path}")
-    with open(path, 'w') as file:
+    with open(path, "w") as file:
         file.write(contents)
 
 
 def generate_module(template_path: str, out: ConanOutput, module_path: str):
-
     (dirname, module) = os.path.split(module_path)
 
     # 如果路径也存在 那么就创建相应的模块
@@ -51,9 +50,9 @@ def generate_module(template_path: str, out: ConanOutput, module_path: str):
     # 不对 先修改文件内容
     # 还得创建必要的目录
     # module_path = path
-    include_path = os.path.join(module_path, 'include', module)
-    source_path = os.path.join(module_path, 'src')
-    test_path = os.path.join(module_path, 'test')
+    include_path = os.path.join(module_path, "include", module)
+    source_path = os.path.join(module_path, "src")
+    test_path = os.path.join(module_path, "test")
     # 如果这个模块已经存在了 那么覆写是很危险的
     # 所以如果目录确实已经存在了 那么我们确实不应该再次操作
     # 1. 目录不存在
@@ -65,7 +64,8 @@ def generate_module(template_path: str, out: ConanOutput, module_path: str):
             return
         if os.listdir(module_path):
             print(
-                f"{module_path} is not empty dir, so we could not generate template for it")
+                f"{module_path} is not empty dir, so we could not generate template for it"
+            )
             return
     else:
         # 如果不存在那么很简单 就创建一个
@@ -77,15 +77,15 @@ def generate_module(template_path: str, out: ConanOutput, module_path: str):
     os.mkdir(source_path)
     os.mkdir(test_path)
 
-    template_header = os.path.join(template_path, 'module.hpp')
-    template_source = os.path.join(template_path, 'module.cpp')
-    template_test = os.path.join(template_path, 'test_module.cpp')
-    template_cmake = os.path.join(template_path, 'CMakeLists.txt')
+    template_header = os.path.join(template_path, "module.hpp")
+    template_source = os.path.join(template_path, "module.cpp")
+    template_test = os.path.join(template_path, "test_module.cpp")
+    template_cmake = os.path.join(template_path, "CMakeLists.txt")
 
-    header = os.path.join(include_path, f'{module}.hpp')
-    source = os.path.join(source_path, f'{module}.cpp')
-    test = os.path.join(test_path, f'test_{module}.cpp')
-    cmake = os.path.join(module_path, 'CMakeLists.txt')
+    header = os.path.join(include_path, f"{module}.hpp")
+    source = os.path.join(source_path, f"{module}.cpp")
+    test = os.path.join(test_path, f"test_{module}.cpp")
+    cmake = os.path.join(module_path, "CMakeLists.txt")
 
     copy_template(out, template_header, header, module)
     copy_template(out, template_source, source, module)
@@ -94,18 +94,18 @@ def generate_module(template_path: str, out: ConanOutput, module_path: str):
 
     # 还有一个问题 如果我们的父目录没有CMakeLists.txt 那么我们需要为其创建一个
     # 这就要求父目录不能是根目录 也就是 .
-    if dirname == '.':
+    if dirname == ".":
         return
 
-    prev_cmake = os.path.join(dirname, 'CMakeLists.txt')
+    prev_cmake = os.path.join(dirname, "CMakeLists.txt")
     if os.path.exists(prev_cmake):
         # 在这种情况下我们只需要在最后添加上一行代码即可
         # add_subdirectory(module)
-        with open(prev_cmake, 'a') as file:
+        with open(prev_cmake, "a") as file:
             file.write(f"add_subdirectory({module})\n")
     else:
         # 在这种情况下我们需要创建这个文件
-        with open(prev_cmake, 'w') as file:
+        with open(prev_cmake, "w") as file:
             file.write(f"\nadd_subdirectory({module})\n")
 
 
@@ -123,33 +123,34 @@ def generate_test(template_path: str, out: ConanOutput, test_path: str):
             return
         if os.listdir(test_path):
             print(
-                f"{test_path} is not empty dir, so we could not generate template for it")
+                f"{test_path} is not empty dir, so we could not generate template for it"
+            )
             return
     else:
         # 如果不存在那么很简单 就创建一个
         os.mkdir(test_path)
 
-    template_source = os.path.join(template_path, 'module.cpp')
-    template_cmake = os.path.join(template_path, 'CMakeLists.txt')
-    source = os.path.join(test_path, f'{module}.cpp')
-    cmake = os.path.join(test_path, 'CMakeLists.txt')
+    template_source = os.path.join(template_path, "module.cpp")
+    template_cmake = os.path.join(template_path, "CMakeLists.txt")
+    source = os.path.join(test_path, f"{module}.cpp")
+    cmake = os.path.join(test_path, "CMakeLists.txt")
     copy_template(out, template_source, source, module)
     copy_template(out, template_cmake, cmake, module)
 
     # 还有一个问题 如果我们的父目录没有CMakeLists.txt 那么我们需要为其创建一个
     # 这就要求父目录不能是根目录 也就是 .
-    if dirname == '.':
+    if dirname == ".":
         return
 
-    prev_cmake = os.path.join(dirname, 'CMakeLists.txt')
+    prev_cmake = os.path.join(dirname, "CMakeLists.txt")
     if os.path.exists(prev_cmake):
         # 在这种情况下我们只需要在最后添加上一行代码即可
         # add_subdirectory(module)
-        with open(prev_cmake, 'a') as file:
+        with open(prev_cmake, "a") as file:
             file.write(f"add_subdirectory({module})\n")
     else:
         # 在这种情况下我们需要创建这个文件
-        with open(prev_cmake, 'w') as file:
+        with open(prev_cmake, "w") as file:
             file.write(f"\nadd_subdirectory({module})\n")
 
 
@@ -166,9 +167,14 @@ def mod(conan_api: ConanAPI, parser, *args):
         out.error("conanfile.py not found")
         return
 
-    parser.add_argument('path', help='path from current path to module name')
-    parser.add_argument('-t', '--template', default='module',
-                        action=OnceArgument, help='generate template source files')
+    parser.add_argument("path", help="path from current path to module name")
+    parser.add_argument(
+        "-t",
+        "--template",
+        default="module",
+        action=OnceArgument,
+        help="generate template source files",
+    )
     args = parser.parse_args(*args)
 
     # 用户输入的参数 表示的是从根目录开始 到你希望创建的模块的路径
@@ -190,7 +196,7 @@ def mod(conan_api: ConanAPI, parser, *args):
     # 但是如果用户真的想这么干 我们也不能拦着
     if not dirname:
         # 我们让dirname代表当前路径
-        dirname = '.'
+        dirname = "."
         print("normaly module should in a sub folder")
 
     # 检查提供的路径是否存在
@@ -200,11 +206,9 @@ def mod(conan_api: ConanAPI, parser, *args):
 
     # 现在path绝对带着一个/
     # 最起码是 ./src
-    if args.template == 'lib':
-        generate_module(lib_template_path, out,
-                        os.path.join(dirname, basename))
-    elif args.template == 'bin':
-        generate_test(bin_template_path, out,
-                      os.path.join(dirname, basename))
+    if args.template == "lib":
+        generate_module(lib_template_path, out, os.path.join(dirname, basename))
+    elif args.template == "bin":
+        generate_test(bin_template_path, out, os.path.join(dirname, basename))
     else:
         out.error(f"unknown template:{args.template}")

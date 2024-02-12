@@ -19,11 +19,21 @@ def ut(conan_api: ConanAPI, parser, *args):
         out.error("conanfile.py not found")
         return
 
-    parser.add_argument('regex', help='search unit test witl regex')
-    parser.add_argument('-t', '--timeout', default='60',
-                        action=OnceArgument, help='timeout for each test')
-    parser.add_argument('-m', '--memcheck', default='false',
-                        action=OnceArgument, help='check with valgrind --tool=memcheck')
+    parser.add_argument("regex", help="search unit test witl regex")
+    parser.add_argument(
+        "-t",
+        "--timeout",
+        default="60",
+        action=OnceArgument,
+        help="timeout for each test",
+    )
+    parser.add_argument(
+        "-m",
+        "--memcheck",
+        default="false",
+        action=OnceArgument,
+        help="check with valgrind --tool=memcheck",
+    )
     args = parser.parse_args(*args)
 
     failed_list = []
@@ -42,12 +52,20 @@ def ut(conan_api: ConanAPI, parser, *args):
                 if os.access(filename, os.X_OK):
                     print(f"#{n} testing... {filename}")
                     # 这里还需要收集返回的信息
-                    if args.memcheck == 'true':
+                    if args.memcheck == "true":
                         result = subprocess.run(
-                            ["valgrind", "--tool=memcheck", filename], capture_output=True, encoding='utf-8', timeout=int(args.timeout))
+                            ["valgrind", "--tool=memcheck", filename],
+                            capture_output=True,
+                            encoding="utf-8",
+                            timeout=int(args.timeout),
+                        )
                     else:
                         result = subprocess.run(
-                            [filename], capture_output=True, encoding='utf-8', timeout=int(args.timeout))
+                            [filename],
+                            capture_output=True,
+                            encoding="utf-8",
+                            timeout=int(args.timeout),
+                        )
                     # 我们还可以收集通过测试的数量
                     if result.returncode == 0:
                         passed += 1

@@ -17,11 +17,12 @@ def stats(conan_api: ConanAPI, parser, *args):
     #     out.error("conanfile.py not found")
     #     return
 
-    parser.add_argument('path', help='path')
+    parser.add_argument("path", help="path")
     args = parser.parse_args(*args)
 
     result = subprocess.run(
-        ["code_statistics", args.path], capture_output=True, encoding='utf-8')
+        ["code_statistics", args.path], capture_output=True, encoding="utf-8"
+    )
     if result.stdout:
         out.info(result.stdout)
     if result.stderr:

@@ -38,12 +38,11 @@ def run(conan_api: ConanAPI, parser, *args):
                         commands.append(a)
                 # print(commands)
                 # join commands
-                cmd = ''
+                cmd = ""
                 for c in commands:
-                    cmd += c + ' '
+                    cmd += c + " "
                 out.info(f"running... {cmd}\n")
-                result = subprocess.run(
-                    commands, capture_output=True, encoding='utf-8')
+                result = subprocess.run(commands, capture_output=True, encoding="utf-8")
 
                 if result.stdout:
                     out.info(result.stdout)

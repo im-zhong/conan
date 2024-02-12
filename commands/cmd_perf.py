@@ -40,7 +40,7 @@ def perf(conan_api: ConanAPI, parser, *args):
     # <name>.folded
     # <name>.svg
 
-    parser.add_argument('regex', help='search unit test witl regex')
+    parser.add_argument("regex", help="search unit test witl regex")
     args = parser.parse_args(*args)
 
     # 查找所有以test_开头的可执行程序 并且执行
@@ -54,17 +54,13 @@ def perf(conan_api: ConanAPI, parser, *args):
                 print(f"perf... {filename}")
 
                 # mode=w means truncate
-                subprocess.run(
-                    ['perf', 'record', '-g', '-o', 'tmp.data', filename])
-                with open('tmp.perf', 'w') as f:
-                    subprocess.run(
-                        ['perf', 'script', '-i', 'tmp.data'], stdout=f)
-                with open('tmp.folded', 'w') as f:
-                    subprocess.run(
-                        ['stackcollapse-perf.pl', 'tmp.perf'], stdout=f)
-                with open('tmp.svg', 'w') as f:
-                    subprocess.run(
-                        ['flamegraph.pl', 'tmp.folded'], stdout=f)
+                subprocess.run(["perf", "record", "-g", "-o", "tmp.data", filename])
+                with open("tmp.perf", "w") as f:
+                    subprocess.run(["perf", "script", "-i", "tmp.data"], stdout=f)
+                with open("tmp.folded", "w") as f:
+                    subprocess.run(["stackcollapse-perf.pl", "tmp.perf"], stdout=f)
+                with open("tmp.svg", "w") as f:
+                    subprocess.run(["flamegraph.pl", "tmp.folded"], stdout=f)
 
                 # 只考虑匹配到的第一个程序
                 return
